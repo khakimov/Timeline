@@ -2685,7 +2685,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			reSize(false, true);
 			VMM.Element.visible(navigation.prevBtn, false);
 			// GO TO FIRST SLIDE
-			goToSlide(0, "easeOutExpo", __duration, true, true);
+			goToSlide(window.current_position, "easeOutExpo", __duration, true, true);
 			
 			_active = true;
 		};
@@ -4045,7 +4045,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var markers = []; // HOLDS MARKER DOM OBJECTS
 		var interval_array = [];
 		var timespan = {};
-		var current_marker = 0; // CURRENT MARKER
+		var current_marker = window.current_position; // CURRENT MARKER
 		var _active = false;
 		
 		var timelookup = {
@@ -4282,6 +4282,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		function onMarkerClick(e) {
 			VMM.DragSlider.cancelSlide();
 			goToMarker(e.data.number);
+			window.location.hash = e.data.number;
 			upDate();
 		};
 		
@@ -5574,6 +5575,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 
 /*
 $(document).ready(function() {
+    window.current_position = 0;
+    
+    //get position from url#hash
+    if(window.location.hash) {
+        hash = window.location.hash.substring(1);
+        window.current_position = parseInt(hash);
+    }
 
 	//Instantiate 
 	timeline = new VMM.Timeline(960, 550); // Pass in width and height or set it in your stylesheet;
